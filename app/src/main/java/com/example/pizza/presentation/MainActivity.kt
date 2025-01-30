@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -27,103 +28,25 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
 import com.example.pizza.R
 import com.example.pizza.common.URL.BASE_URL
 import com.example.pizza.data.entity.Pizza
 import com.example.pizza.domain.entity.PizzaModel
+import com.example.pizza.presentation.view.NavigationScreen
 import com.example.pizza.presentation.viewModel.PizzaViewModel
 import com.example.pizza.ui.theme.Text_Primary
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
     private val pizzaViewModel by viewModel<PizzaViewModel>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            PizzasScreen(pizzaViewModel)
+            NavigationScreen(pizzaViewModel)
         }
     }
 }
 
-@Composable
-fun PizzasScreen(viewModel: PizzaViewModel) {
-    viewModel.getPizzasCatalog()
-    val scrollState = rememberLazyListState()
-    val catalog = viewModel.catalog.collectAsState()
-
-    Column(modifier = Modifier.fillMaxSize()) {
-        Box(
-            modifier = Modifier
-                .padding(top = 32.dp, start = 18.dp, end = 16.dp, bottom = 24.dp)
-                .fillMaxWidth()
-                .wrapContentHeight()
-        ) {
-            Text(
-                text = stringResource(R.string.pizza_header),
-                color = Text_Primary,
-                fontSize = 24.sp,
-                lineHeight = 32.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Default,
-                modifier = Modifier.align(Alignment.CenterStart)
-            )
-        }
-        LazyColumn(
-            state = scrollState,
-            modifier = Modifier
-                .padding(bottom = 27.dp)
-                .fillMaxSize()
-        ) {
-            catalog.value?.let { items(it.catalog) { PizzaCard(it) } }
-        }
-    }
-}
-
-@Composable
-fun PizzaCard(pizza: Pizza) {
-    Box(
-        modifier = Modifier.wrapContentSize()
-    ) {
-        Row {
-            AsyncImage(
-                model = BASE_URL+pizza.img,
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(start = 16.dp, bottom = 12.dp)
-                    .size(116.dp)
-            )
-            Spacer(Modifier.size(24.dp))
-            Column(modifier = Modifier.padding(end = 16.dp)) {
-                Text(
-                    text = pizza.name,
-                    color = Text_Primary,
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Medium,
-                    lineHeight = 24.sp,
-                    modifier = Modifier
-                        .padding(bottom = 8.dp)
-                )
-                Text(
-                    text = pizza.description,
-                    fontSize = 12.sp,
-                    lineHeight = 16.sp,
-                    fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Normal,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-                Text(
-                    text = "от " + pizza.sizes.first().price.toString(),
-                    color = Text_Primary,
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Medium,
-                    lineHeight = 24.sp,
-                )
-            }
-        }
-    }
-}
