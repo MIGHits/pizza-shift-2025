@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.pizza"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.pizza"
@@ -50,7 +50,14 @@ android {
 }
 
 dependencies {
-
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+    implementation(libs.logging.interceptor)
+    implementation(libs.converter.gson)
+    implementation (libs.retrofit)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
