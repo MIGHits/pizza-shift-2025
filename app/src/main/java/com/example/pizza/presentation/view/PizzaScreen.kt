@@ -1,5 +1,7 @@
 package com.example.pizza.presentation.view
 
+import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,15 +26,17 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.pizza.R
 import com.example.pizza.common.URL.BASE_URL
 import com.example.pizza.data.entity.Pizza
 import com.example.pizza.presentation.viewModel.PizzaViewModel
 import com.example.pizza.ui.theme.Text_Primary
+import com.google.gson.Gson
 
 @Composable
-fun PizzasScreen(viewModel: PizzaViewModel) {
+fun PizzasScreen(viewModel: PizzaViewModel, navController: NavController) {
     viewModel.getPizzasCatalog()
     val scrollState = rememberLazyListState()
     val catalog = viewModel.catalog.collectAsState()
@@ -60,15 +64,27 @@ fun PizzasScreen(viewModel: PizzaViewModel) {
                 .padding(bottom = 54.dp)
                 .fillMaxSize()
         ) {
-            catalog.value?.let { items(it.catalog) { PizzaCard(it) } }
+            catalog.value?.let { items(it.catalog) { PizzaCard(it, navController) } }
         }
     }
 }
 
 @Composable
-fun PizzaCard(pizza: Pizza) {
+fun PizzaCard(pizza: Pizza, navController: NavController) {
     Box(
-        modifier = Modifier.wrapContentSize()
+        modifier = Modifier
+            .wrapContentSize()
+            .clickable(onClick = {
+                navController.navigate(
+                    "PizzaDetails/${
+                        Uri.encode(
+                            Gson().toJson(
+                                pizza
+                            )
+                        )
+                    }"
+                )
+            })
     ) {
         Row {
             AsyncImage(
@@ -76,7 +92,8 @@ fun PizzaCard(pizza: Pizza) {
                 contentDescription = null,
                 modifier = Modifier
                     .padding(start = 16.dp, bottom = 12.dp)
-                    .wrapContentSize().fillMaxSize(0.4f)
+                    .wrapContentSize()
+                    .fillMaxSize(0.4f)
 
             )
             Spacer(Modifier.size(24.dp))
