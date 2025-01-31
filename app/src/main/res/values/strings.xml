@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">pizza</string>
     <string name="pizza_header">Пицца</string>
+    <string name="pizza_small">Маленькая</string>
+    <string name="pizza_medium">Средняя</string>
+    <string name="pizza_large">Большая</string>
+    <string name="standart_dough">традиционное тесто</string>
+    <string name="small_size">25 см</string>
+    <string name="medium_size">30 см</string>
+    <string name="size_large">35 см</string>
+    <string name="toppings_header">Добавить по вкусу</string>
+    <string name="from_pizza_size">"от "</string>
+    <string name="virgule">", "</string>
 </resources>

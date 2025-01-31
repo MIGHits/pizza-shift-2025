@@ -1,7 +1,7 @@
-package com.example.pizza.data.entity
+package com.example.pizza.domain.entity
 
 
-data class PizzaIngredient(
+data class Ingredient(
     val name: IngredientName,
     val cost: Number,
     val img: String
