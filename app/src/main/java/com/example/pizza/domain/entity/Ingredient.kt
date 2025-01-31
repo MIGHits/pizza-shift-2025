@@ -1,15 +1,11 @@
-package com.example.pizza.data.entity
-
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+package com.example.pizza.domain.entity
 
 
-@Parcelize
-data class PizzaIngredient(
+data class Ingredient(
     val name: IngredientName,
     val cost: Number,
     val img: String
-) : Parcelable {
+) {
     enum class IngredientName {
         PINEAPPLE,
         MOZZARELLA,

@@ -1,14 +1,11 @@
-package com.example.pizza.data.entity
+package com.example.pizza.domain.entity
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
-data class Pizza(
+data class PizzaEntity(
     val id:String,
     val name:String,
-    val ingredients:List<PizzaIngredient>,
-    val toppings:List<PizzaIngredient>,
+    val ingredients:List<Ingredient>,
+    val toppings:List<Ingredient>,
     val description:String,
     val sizes:List<PizzaSize>,
     val doughs:List<PizzaDough>,
@@ -23,4 +20,4 @@ data class Pizza(
     val isNew:Boolean,
     val isHit:Boolean,
     val img:String
-) : Parcelable
+)

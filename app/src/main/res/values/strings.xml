@@ -9,4 +9,6 @@
     <string name="medium_size">30 см</string>
     <string name="size_large">35 см</string>
     <string name="toppings_header">Добавить по вкусу</string>
+    <string name="from_pizza_size">"от "</string>
+    <string name="virgule">", "</string>
 </resources>

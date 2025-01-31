@@ -1,6 +1,11 @@
-package com.example.pizza.domain.entity
+package com.example.pizza.data.models
 
+import android.os.Parcelable
+import com.example.pizza.domain.entity.PizzaDough
+import com.example.pizza.domain.entity.PizzaSize
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class PizzaModel(
     val id:String,
     val name:String,
@@ -20,4 +25,4 @@ data class PizzaModel(
     val isNew:Boolean,
     val isHit:Boolean,
     val img:String
-)
+) : Parcelable

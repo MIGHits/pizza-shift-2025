@@ -1,7 +1,7 @@
-package com.example.pizza.data.entity
+package com.example.pizza.data.models
 
 data class PizzasResponse(
     val success:Boolean,
     val reason:String?,
-    val catalog:List<Pizza>
+    val catalog:List<PizzaModel>
 )

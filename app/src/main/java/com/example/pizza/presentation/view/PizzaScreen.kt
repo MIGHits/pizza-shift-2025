@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -30,7 +29,8 @@ import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.pizza.R
 import com.example.pizza.common.URL.BASE_URL
-import com.example.pizza.data.entity.Pizza
+import com.example.pizza.data.models.PizzaModel
+import com.example.pizza.domain.entity.PizzaEntity
 import com.example.pizza.presentation.viewModel.PizzaViewModel
 import com.example.pizza.ui.theme.Text_Primary
 import com.google.gson.Gson
@@ -70,7 +70,7 @@ fun PizzasScreen(viewModel: PizzaViewModel, navController: NavController) {
 }
 
 @Composable
-fun PizzaCard(pizza: Pizza, navController: NavController) {
+fun PizzaCard(pizzaModel: PizzaEntity, navController: NavController) {
     Box(
         modifier = Modifier
             .wrapContentSize()
@@ -79,7 +79,7 @@ fun PizzaCard(pizza: Pizza, navController: NavController) {
                     "PizzaDetails/${
                         Uri.encode(
                             Gson().toJson(
-                                pizza
+                                pizzaModel
                             )
                         )
                     }"
@@ -88,7 +88,7 @@ fun PizzaCard(pizza: Pizza, navController: NavController) {
     ) {
         Row {
             AsyncImage(
-                model = BASE_URL + pizza.img,
+                model = pizzaModel.img,
                 contentDescription = null,
                 modifier = Modifier
                     .padding(start = 16.dp, bottom = 12.dp)
@@ -99,7 +99,7 @@ fun PizzaCard(pizza: Pizza, navController: NavController) {
             Spacer(Modifier.size(24.dp))
             Column(modifier = Modifier.padding(end = 16.dp)) {
                 Text(
-                    text = pizza.name,
+                    text = pizzaModel.name,
                     color = Text_Primary,
                     fontSize = 16.sp,
                     fontFamily = FontFamily.Default,
@@ -109,7 +109,7 @@ fun PizzaCard(pizza: Pizza, navController: NavController) {
                         .padding(bottom = 8.dp)
                 )
                 Text(
-                    text = pizza.description,
+                    text = pizzaModel.description,
                     fontSize = 12.sp,
                     lineHeight = 16.sp,
                     fontFamily = FontFamily.Default,
@@ -117,7 +117,8 @@ fun PizzaCard(pizza: Pizza, navController: NavController) {
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
                 Text(
-                    text = "от " + pizza.sizes.first().price.toString(),
+                    text = stringResource(R.string.from_pizza_size)
+                            + pizzaModel.sizes.first().price.toString(),
                     color = Text_Primary,
                     fontSize = 16.sp,
                     fontFamily = FontFamily.Default,
