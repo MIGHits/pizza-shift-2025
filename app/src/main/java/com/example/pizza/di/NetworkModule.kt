@@ -5,7 +5,6 @@ import com.example.pizza.common.CONST.READ_TIMEOUT
 import com.example.pizza.common.CONST.WRITE_TIMEOUT
 import com.example.pizza.common.URL.BASE_URL
 import com.example.pizza.data.remote.Api
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module

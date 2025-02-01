@@ -11,4 +11,14 @@
     <string name="toppings_header">Добавить по вкусу</string>
     <string name="from_pizza_size">"от "</string>
     <string name="virgule">", "</string>
+    <string name="add_to_cart">В корзину</string>
+    <string name="pizza_navigation">Пицца</string>
+    <string name="orders_navigation">Заказы</string>
+    <string name="cart_navigation">Корзина</string>
+    <string name="profile_navigation">Профиль</string>
+    <string name="thick_dough">Утолщенное тесто</string>
+    <string name="plus_sign">+</string>
+    <string name="minus_sign">-</string>
+    <string name="change_cart_item">Изменить</string>
+    <string name="minAmount">1</string>
 </resources>

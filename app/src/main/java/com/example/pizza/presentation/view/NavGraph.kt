@@ -18,7 +18,7 @@ fun NavGraph(navController: NavHostController, pizzaViewModel: PizzaViewModel) {
             OrderScreen()
         }
         composable("CartScreen") {
-            CartScreen()
+            CartScreen(pizzaViewModel,navController)
         }
         composable("ProfileScreen") {
             ProfileScreen()
@@ -28,7 +28,7 @@ fun NavGraph(navController: NavHostController, pizzaViewModel: PizzaViewModel) {
             arguments = listOf(navArgument("pizzaJson") { type = NavType.StringType })
         ) { backStackEntry ->
             val pizzaJson = backStackEntry.arguments?.getString("pizzaJson")
-            PizzaDetails(navController, pizzaJson)
+            PizzaDetails(navController, pizzaJson,pizzaViewModel)
         }
     }
 }

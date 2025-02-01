@@ -1,4 +1,5 @@
 package com.example.pizza.presentation.view
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -16,10 +17,12 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,27 +44,32 @@ import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.pizza.App
 import com.example.pizza.R
+import com.example.pizza.common.CONST.COLUMNS_AMOUNT
 import com.example.pizza.common.URL.BASE_URL
 import com.example.pizza.data.models.PizzaModel
 import com.example.pizza.data.models.PizzaIngredient
+import com.example.pizza.domain.entity.PizzaEntity
+import com.example.pizza.presentation.viewModel.PizzaViewModel
+import com.example.pizza.ui.theme.Button_Primary
 import com.example.pizza.ui.theme.Text_Primary
 import com.google.gson.Gson
 
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun PizzaDetails(navController: NavController, pizzaJson: String?) {
+fun PizzaDetails(navController: NavController, pizzaJson: String?, pizzaViewModel: PizzaViewModel) {
 
     val scrollState = rememberLazyListState()
-    val pizzaModel = Gson().fromJson(pizzaJson, PizzaModel::class.java)
+    val pizzaModel = Gson().fromJson(pizzaJson, PizzaEntity::class.java)
     var pizzaSize by remember { mutableStateOf(getString(App.instance, R.string.small_size)) }
-    val pizzaDough = mutableStateOf(stringResource(R.string.standart_dough))
+    val pizzaDough by remember { mutableStateOf(App.instance.getString(R.string.standart_dough)) }
+    val selectedToppings by pizzaViewModel.selectedToppings.collectAsState()
 
     LazyColumn(
         modifier = Modifier
             .padding(bottom = 54.dp)
             .fillMaxSize(),
-        state = scrollState
+        state = scrollState,
     ) {
         item {
             Box(
@@ -117,7 +125,7 @@ fun PizzaDetails(navController: NavController, pizzaJson: String?) {
 
             )
             Text(
-                text = pizzaSize + stringResource(R.string.virgule) + pizzaDough.value,
+                text = pizzaSize + stringResource(R.string.virgule) + pizzaDough,
                 color = Text_Primary,
                 fontSize = 14.sp,
                 lineHeight = 20.sp,
@@ -164,13 +172,38 @@ fun PizzaDetails(navController: NavController, pizzaJson: String?) {
                     .padding(8.dp)
                     .fillMaxWidth()
                     .wrapContentHeight(),
-                maxItemsInEachRow = 3
+                maxItemsInEachRow = COLUMNS_AMOUNT
             ) {
                 pizzaModel.toppings.forEach { topping ->
                     ToppingCard(
-                        topping
+                        topping,
+                        selectedToppings,
+                        addTopping = {
+                            pizzaViewModel.addTopping(topping)
+                        }, removeTopping = {
+                            pizzaViewModel.removeTopping(topping)
+                        }
                     )
                 }
+            }
+            Button(
+                modifier = Modifier
+                    .padding(top = 8.dp, bottom = 16.dp, start = 16.dp, end = 16.dp)
+                    .fillMaxWidth(),
+                onClick = {
+                    pizzaViewModel.selectPizzaSize(pizzaSize)
+                    pizzaViewModel.addToCart(pizzaModel)
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Button_Primary),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.add_to_cart),
+                    fontSize = 16.sp,
+                    lineHeight = 24.sp,
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.SemiBold
+                )
             }
         }
     }

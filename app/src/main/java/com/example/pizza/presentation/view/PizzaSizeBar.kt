@@ -12,6 +12,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -24,6 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.getString
 import com.example.pizza.App
 import com.example.pizza.R
+import com.example.pizza.ui.theme.Secondary_Button
+import com.example.pizza.ui.theme.Secondary_Gray
+import com.example.pizza.ui.theme.Select_Button
 
 @Composable
 fun PizzaSizeBar(changePizzaSize: (text: String) -> Unit) {
@@ -32,13 +36,13 @@ fun PizzaSizeBar(changePizzaSize: (text: String) -> Unit) {
         stringResource(R.string.pizza_medium),
         stringResource(R.string.pizza_large)
     )
-    var selectedIndex by remember { mutableStateOf(0) }
+    var selectedIndex by remember { mutableIntStateOf(0) }
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, bottom = 24.dp)
-            .background(Color(0xFFF2F3F5), shape = RoundedCornerShape(16.dp))
-            .border(1.dp, Color(0xFFE0E0E0), shape = RoundedCornerShape(16.dp))
+            .background(Select_Button, shape = RoundedCornerShape(16.dp))
+            .border(1.dp, Secondary_Button, shape = RoundedCornerShape(16.dp))
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),

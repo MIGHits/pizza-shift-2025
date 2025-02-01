@@ -7,6 +7,12 @@ import org.koin.dsl.module
 
 val appModule = module {
     viewModel<PizzaViewModel> {
-        PizzaViewModel(getCatalogUseCase = get())
+        PizzaViewModel(
+            getCatalogUseCase = get(),
+            getCartUseCase = get(),
+            addToCartUseCase = get(),
+            removeFromCartUseCase = get(),
+            updateCartUseCase = get()
+        )
     }
 }

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 android {
@@ -51,7 +52,10 @@ android {
 }
 
 dependencies {
-    implementation (libs.androidx.material)
+    implementation("androidx.room:room-ktx:2.6.1")
+    implementation(libs.androidx.ui.test.android)
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation(libs.androidx.material)
     implementation(platform(libs.koin.bom))
     implementation(libs.androidx.navigation.compose)
     implementation(libs.koin.core)
@@ -60,7 +64,7 @@ dependencies {
     implementation(libs.coil.network.okhttp)
     implementation(libs.logging.interceptor)
     implementation(libs.converter.gson)
-    implementation (libs.retrofit)
+    implementation(libs.retrofit)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
